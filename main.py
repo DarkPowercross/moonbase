@@ -5,6 +5,12 @@ from internal.enums import Burnrates, Resource_types
 import time
 import threading
 
+from internal.enums.task_types import commands, completer
+import readline
+
+readline.set_completer(completer)
+readline.parse_and_bind("tab: complete") 
+
 cache = Cache()
 resource_lock = threading.Lock()
 
@@ -29,9 +35,12 @@ def main():
             print(f"{name.title()}:  {values[name]} : Burnrate: {burnrate}")
         print("===============")
         try:
-            option = int(input("Enter a number:"))
-
-        except ValueError:
+            option = input("Enter a command:")
+            args = option.split(" ")
+            commands[args[0]].run(args[1:], cache)
+        except Exception as e:
+            print(e)
+        except (ValueError, KeyError):
             ...
 
 main()

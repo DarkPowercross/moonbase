@@ -3,7 +3,7 @@ from internal.enums import Resource_types
 
 class Base:
     def __init__(self, name, health, defense):
-        self.health = name
+        self.name = name
         self.health = health
         self.defense = defense
         for res in Resource_types:
